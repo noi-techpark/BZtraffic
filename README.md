@@ -1,6 +1,6 @@
 # BZtraffic
 
-Traffic is an online application that is [free software](http://www.gnu.org/philosophy/free-sw.html) developed under GPL License,
+Traffic is an online application that is [free software](http://www.gnu.org/philosophy/free-sw.html) developed under AGPL License
 * [Comune di Bolzano progetto intergreen](http://www.integreen-life.bz.it/) 
 * [Tis Innovation Park](http://www.tis.bz.it) 
 * ***web design*** [made in cima](www.madeincima.it) 
