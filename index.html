@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="it-IT">
+<head>
+<meta charset="utf-8" />
+<title>Homepage | BZ Traffic</title>
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!--[if lte IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+<link href="css/standard.css" rel="stylesheet" media="screen,projection,print" type="text/css" />
+
+</head>
+<body>
+	<header class="header" id="header">
+		<div class="aux">
+			<h1 class="logo" id="logo"><a href="#"><img src="images/logo-bolzano-traffic.png" alt="Logo Bolzano Traffic Beta" /> <span class="alt">Bolzano Traffic</span></a></h1>
+			<div class="lang round">
+				<span class="round">EN</span>
+				<ul class="round">
+					<li><a href="#">IT</a></li>
+				</ul>
+			</div>
+		</div>
+    </header>
+    <main id="main" class="main">
+		<div class="actions">
+			<div class="other controls box round">
+				<ul>
+					<!--<li><a href="#" class="locate" id="locate">Mia posizione</a></li>-->
+					<li><a href="#" class="update">Aggiorna i dati</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="map-cont box">
+            <div class="leaflet-popup-pane" id="popup-pane"></div>
+            <div id="map" class='leaflet-container leaflet-retina leaflet-fade-anim'>
+
+                <div class="leaflet-control-container">
+                    <div class="leaflet-control-zoom leaflet-bar leaflet-control">
+                        <!--<a href="#" class="leaflet-control-zoom-in" onclick="controlZoom(event, 'in');">+</a>-->
+                        <a href="#" class="leaflet-control-zoom-in" id="control-zoom-in">+</a>
+                        <a href="#" class="leaflet-control-zoom-out" id="control-zoom-out">-</a>
+                    </div>
+                </div>
+
+                <div id="load-wrapper">
+                    <img src="images/loading-02.gif" />
+                </div>
+                
+                <!--<div class="leaflet-popup-pane" id="popup-pane"></div>-->
+                
+			</div>
+		</div>
+    </main>
+    <aside id="aside" class="aside">
+	    <div class="aux">
+
+	    	<ul class="buttons">
+	    		<li class="developers-btn round"><a href="#"><strong tkey="sei-sviluppatore">Sei uno sviluppatore?</strong> <em tkey="collabora-progetto">collabora al progetto</em></a></li>
+	    	</ul>
+	    	
+	    </div>
+    </aside>
+
+    <footer id="footer-1" class="footer-1">
+    	<div class="aux">
+	    	<h3><span tkey="app-progetto">Le app del progetto</span> <strong>Bolzano Traffic</strong></h3>
+			<ul>
+				<li class="bzparking"><a href="#"><img src="images/logo-bzparking.png" alt="BZ Parking" /></a></li>
+				<li class="bzbus"><a href="#"><img src="images/logo-bzbus.png" alt="BZ Bus" /></a></li>
+				<li class="bztraffic"><a href="#"><img src="images/logo-bztraffic.png" alt="BZ Traffic" /></a></li>
+			</ul>	
+    	</div>
+    </footer>
+    <footer id="footer-2" class="footer-2">
+    	<div class="aux">
+		    <div class="aux2">
+		    	<ul>
+					<li class="eu"><a href="http://ec.europa.eu/environment/life/"></a></li>
+					<li class="ait"><a href="http://www.ait.ac.at/"></a></li>
+					<li class="integreen"><a href="http://www.integreen-life.bz.it/it/"></a></li>
+					<li class="bz"><a href="http://www.comune.bolzano.it/"></a></li>
+					<li class="tis"><a href="http://tis.bz.it/"></a></li>
+				</ul>
+		    </div>
+		    <div class="text">
+			    <p>Codice licenziato sotto <a href="http://www.gnu.org/licenses/agpl-3.0.html">GNU Affero General Public License</a> pubblicato su <a href="https://github.com/ilvalle/parkbz">github</a><br />Powered by <a href="http://www.ethicalsoftware.it">Ethical Software</a><br />Designed by <a href="http://www.madeincima.it">Made in Cima</a></p>
+				<p>Contatto: project [at] integreen-life.bz.it</p>
+			</div>
+    	</div>
+    </footer>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"> </script>
+    <!--<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>-->
+    <script src="http://openlayers.org/en/v3.0.0/build/ol.js" type="text/javascript"></script>
+    <script src="libs/flot/jquery.flot.js" type="text/javascript"> </script>
+    <script src="libs/flot/jquery.flot.time.js" type="text/javascript"> </script>
+    <script src="libs/flot/flot-axislabels/jquery.flot.axislabels.js" type="text/javascript"> </script>
+    <script src="scripts/detect_device.js" type="text/javascript"> </script>
+    <script src="scripts/jquery.scrollTo.min.js" type="text/javascript"> </script>
+    <script src="scripts/utility.js" type="text/javascript"> </script>
+    <script src="scripts/bztraffic.js" type="text/javascript"> </script>
+    <script src="libs/jquery-multilang/lang.js"></script>
+
+    <a href="https://github.com/ilvalle/parkbz" id="github">Fork me on GitHub</a>
+</body>
+</html>
