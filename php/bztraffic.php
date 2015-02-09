@@ -80,7 +80,7 @@ function get_limits($id){
     $res['max-low']=$xsum/$xcount;
     $res['max-medium']=($xmode+$xmax)/2;
     $res['min-high']=$res['max-medium']+1;
-    //return $res;
+    return $res;
 }
 
 function get_last_velocity($id) {
