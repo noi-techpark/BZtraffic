@@ -46,12 +46,11 @@ var styles = {
 
 
 $(document).ready(function() {
-
     // Riempio l'array features con i dati relativi ai links
     $.ajax({
         dataType: "json",
-        //url: 'http://ipchannels.integreen-life.bz.it/LinkFrontEnd/rest/get-station-details',
-        url: '/php/service_get_features.php',
+        url: 'http://ipchannels.integreen-life.bz.it/LinkFrontEnd/rest/get-available-stations',
+        //url: '/php/service_get_features.php',
         async: false,
         success: function(data) {
             $.each( data, function( key, val) {
@@ -67,7 +66,11 @@ $(document).ready(function() {
                 };
                 setFeatures(feature);
             });
-        }
+        },
+	error : function(object,msg,code){
+		console.log("FAIL:"+msg+" "+code);
+		console.log(object);
+	}
     }); // end - ajax
 
 
