@@ -1,0 +1,15 @@
+{
+    "direzione" : "Richtung",
+    "inverti-direzione" : "Wechsle Richtung",
+    "scelta-green" : "grüne Entscheidung",
+    "libero" : "frei",
+    "rallentamenti" : "",
+    "traffico" : "Verkehr",
+    "vedi-grafico" : "Siehe Grafik",
+    "tempo-medio-oggi" : "Wetter heute",
+    "oggi" : "Heute",
+    "velocita-calcolata" : "Geschwindigkeit berechnet auf Grund der Anzahl der vorbeifahrenden Autos",
+    "sei-sviluppatore" : "Bist du ein Entwickler?",
+    "collabora-progetto" : "Mach mit",
+    "app-progetto" : "Die Apps des Projekts"
+}
