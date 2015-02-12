@@ -34,7 +34,7 @@ function setGodown() {
 			$('#go-down').fadeIn();
 		}
 	});
-	$('#go-down').click(function(){		
+	$('#go-down').click(function(){
 		$.scrollTo($('#aside'),500,{
 			offset: {top:0},
 			axis: 'y'
@@ -142,38 +142,35 @@ $(document).ready(function() {
 
 
     // Cambio lingua - gp
+    setLangMenu();
+
     $('.lang li a').on('click', function(e) {
         e.preventDefault();
-        var lang1= $(this).text();
-        var lang2= $('.lang span').text();
-
-        // Inverto le lingue
-        $(this).text(lang2);
-        $('.lang span').text(lang1);
-
-        // Imposto la lingua selezionata (lang1) nel cookie 'lang'
-        document.cookie= "lang="+lang1;
-
+        var lang= $(this).text();
+        // Imposto il cookie 'lang' con la lingua selezionata
+        document.cookie= "lang="+lang;
         // Chiudo il menu
         $('.lang span').toggleClass('open').next().fadeToggle('fast');
-
+        // Modifico il menu delle lingue
+        setLangMenu();
+        // Imposto la traduzione
         setTranslate();
     });
 
-    // Verifico se esiste il cookie 'lang' e 
-    // in caso modifico il menu della lingua
-    var co= document.cookie;
-    if(co.search("lang=") > -1) {
-        if(co.search("lang=EN") > -1) {
-            $('.lang span').text('EN');
-            $('.lang li a').text('IT');
+    function setLangMenu() {
+        var langActive;
+        var co= document.cookie;
+        var indx= co.indexOf("lang=");
+        if(indx > -1) {
+            langActive= co.substring(indx+5,indx+7);
         }else{
-            $('.lang span').text('IT');
-            $('.lang li a').text('EN');
+            langActive = navigator.language.substr (0, 2);
+            langActive= langActive.toUpperCase();
         }
+        $('.lang span').text(langActive);
+        $('.lang li').show();
+        $('.lang li a:contains("'+langActive+'")').parent().hide();
     }
-
-
 
 	// ---- Link esterno ----------------------------------------------------------------------------------------------------------
 	$("a[href*='http://']:not([href*='"+location.hostname+"']),[href*='https://']:not([href*='"+location.hostname+"'])").attr("target","_blank");

@@ -401,12 +401,6 @@ function get_traffic_value( feature ) {
             set_traffic_value( data );
             set_loading_animation('off');
 
-            /*if(data == 1) feature.setStyle(styles['Green']);
-            else if(data == 2) feature.setStyle(styles['Orange']);
-            else if(data == 3) feature.setStyle(styles['Red']);
-            else feature.setStyle(styles['NoData']);*/
-            //set_link_color( feature );
-
             get_machine_velocity(id);
             show_feature_selected( feature );
         }
@@ -420,13 +414,25 @@ function get_traffic_value2( feature_id ) {
         data: { id: feature_id },
         //async: false,
         success: function(data) {
-            console.log(feature_id+'=> traffic: '+data);
-            //set_traffic_value( data );
+            var value= data;
+            //console.log(feature_id+'=> traffic: '+value);
+            var velocity= get_machine_velocity2( feature_id );
+            //console.log(feature_id+'=> velocity: '+velocity);
             var feature= linksSource.getFeatureById(feature_id);
 
-            if(data == 1) feature.setStyle(styles['Green']);
-            else if(data == 2) feature.setStyle(styles['Orange']);
-            else if(data == 3) feature.setStyle(styles['Red']);
+            if(velocity > 0) {
+                if( velocity <= 15 ) {
+                    value= 3;
+                }else if( velocity <= 35 ){
+                    value= 2;
+                }else{
+                    value= 1;
+                }
+            }
+
+            if(value == 1) feature.setStyle(styles['Green']);
+            else if(value == 2) feature.setStyle(styles['Orange']);
+            else if(value == 3) feature.setStyle(styles['Red']);
             else feature.setStyle(styles['NoData']);
         }
     });
@@ -452,6 +458,19 @@ function get_machine_velocity( id ) {
             set_machine_velocity(data);
         }
     });
+}
+
+function get_machine_velocity2( id ) {
+    var velocity;
+    $.ajax({
+        data: { id: id },
+        url: '/php/service_get_last_velocity.php',
+        async: false,
+        success: function(data) {
+            velocity= data;
+        }
+    });
+    return velocity;
 }
 
 function set_machine_velocity( value ) {
@@ -501,9 +520,8 @@ function get_machine_value( linkLength ) {
             res['link_value'] = 1;
         }
 
-        mV = Math.round( mV / 3.6 );
-
-        //console.log('length: '+linkLength);
+        //mV = Math.round( mV / 3.6 );
+        mV = mV / 3.6;
         ts = (linkLength / mV);          // calcolo i tempi di percorrenza in secondi
         tm = Math.round( ts / 60 );      // trasformo i tempi di percorrenza da secondi a minuti
         res['time'] = tm;

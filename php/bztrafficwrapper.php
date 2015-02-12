@@ -1,4 +1,4 @@
-<?
+<?php
 class BZTrafficWrapper{
     const URL='http://ipchannels.integreen-life.bz.it/LinkFrontEnd/rest';
 

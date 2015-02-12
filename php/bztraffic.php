@@ -1,4 +1,4 @@
-<?
+<?php
 include_once 'bztrafficwrapper.php';
 $bzwrapper= new BZTrafficWrapper();
 $DAYS=31;
@@ -54,11 +54,14 @@ function get_limits($id){
     // il massimo nr dei mezzi su quella strada ($xmax)
     // il conteggio dei rilevamenti ($xcount)
     // e carico $ares array per il calcolo della moda
-    for(; $xcount<count($avalue); $i++ ){
+    for($i=0; $xcount<count($avalue); $i++ ){
         $xcount+=1;
         $a= $avalue[$i];
         $value= $a['value'];
-        $ares[$value ]+=1;
+        if(!isset($ares[$value])) {
+            $ares[$value]= 0;
+        }
+        $ares[$value]+=1;
         $xsum+= $value;
         if( $value>$xmax ){
             $xmax= $value;
