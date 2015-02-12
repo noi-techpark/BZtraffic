@@ -163,7 +163,7 @@ author: Madeincima.it
 		.aside .buttons strong{display:block;font-size:1.2em;line-height:100%;font-family: 'titillium_websemibold',arial,sans-serif;font-weight:normal;margin-bottom:0.2em;text-shadow:1px 1px 1px #3e6f03}
 		.aside .buttons a{display:block;color:#fff;border:0;padding:.8em 0 .9em 0;white-space:nowrap}
 		.aside .buttons em{font-style:normal;font-family: 'titillium_webbold',arial,sans-serif}
-		.developers-btn{background:#76c419;text-shadow:1px 1px 1px #3e6f03}
+		.developers-btn{background:#76c419;text-shadow:1px 1px 1px #3e6f03,min-height:76px;vertical-align: middle;margin: 10px 20px;}
 	
 	.footer-1{float:left;width:90%;text-align:center;padding:1.5em 5% 1em 5%;line-height:200%;border-bottom:1px solid #e0e4e8}
 		.footer-1 h3{font-size:1.7em;font-weight:normal;margin-bottom:.6em;font-family: 'titillium_webregular',arial,sans-serif;}
@@ -443,7 +443,12 @@ a.leaflet-popup-close-button {
     text-align: left;
     border-radius: 12px;
 }
-
+.survey-btn {
+    background: #d2232a;
+}
+.survey-btn strong {
+    line-height: 41px !important;
+}
 /*.markers {
     display: none;
 }
