@@ -97,7 +97,7 @@ author: Madeincima.it
 		.controls a.update{background-position:-30px 9px;border-left:1px solid #7c7a86}
 		.actions .other{position:relative;float:right}
 		.actions .other ul{float:left;width:100%}
-		
+	
 	/*.leaflet-control-container{height:100%;font-size:1.15em}*/
 	.leaflet-control-container{font-size:1.15em}
 	.leaflet-top.leaflet-left{left:auto;top:auto;width:100%;height:100%}
@@ -449,39 +449,25 @@ a.leaflet-popup-close-button {
 .survey-btn strong {
     line-height: 41px !important;
 }
-/*.markers {
-    display: none;
-}
 
-#popup {
-    opacity: 1;
-    width: 416px;
-    transition: opacity 0.2s linear;
-    position: absolute;
-    z-index: 999;
-}
 
-#popup #popup-close-buttom {
-    text-decoration: none;
-    padding: 11px;
+/** credits **/
+#credits {
+    display: block;
     position: absolute;
-    top: 0;
+    bottom: 0;
     right: 0;
-    text-align: center;
-    width: 18px;
-    height: 14px;
-    font: 16px/14px Tahoma, Verdana, sans-serif;
-    color: #c3c3c3;
-    font-weight: bold;
-    background: transparent;
+    z-index: 1000;
+    background-color: #ffffff;
+    opacity: 0.8;
+    padding: 5px 10px;
+    font-size: 0.8em;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    line-height: 100%;
 }
 
-#popup .popup-wrapper {
-    background: white;
-    box-shadow: 0 3px 14px rgba(0,0,0,0.4);
-    border-radius: 12px;
+#credits a {
+    border-bottom: none;
 }
-
-#popup .popup-content {
-    padding: 1.4em 1.9em;
-}*/

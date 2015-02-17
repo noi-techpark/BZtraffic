@@ -115,4 +115,43 @@ function get_velocities($id) {
     $res= json_encode($jres);
     return $res;
 }
+
+function get_trend_velocities($id) {
+    global $bzwrapper;
+    $DAYS= 31;
+    $res= 0;
+    $jres= array();
+    $ares= array();
+
+    for($i=1; $i<=$DAYS; $i++) {
+        $tsp_one = mktime(6, 00, 00, date('n'), date('j')-$i, date('y')).'000';
+        $tsp_two = mktime(22, 00, 00, date('n'), date('j')-$i, date('y')).'000';
+        $json= $bzwrapper->get_records_in_timeframe($id, "velocita'", $tsp_one, $tsp_two);
+        $avalue= json_decode($json, true);
+
+        for($y=0; $y<count($avalue); $y++) {
+            $tsec= $avalue[$y][timestamp] / 1000;
+            $time= date('H:i', $tsec);
+            $value= $avalue[$y]['value'];
+            if(!isset($ares[$time][0])) {
+                $ares[$time][0]= $value;
+                $ares[$time][1]= 1;
+            }else{
+                $ares[$time][0]+= $value;
+                $ares[$time][1]+= 1;
+            }
+        }
+    }
+    ksort($ares);
+    foreach($ares as $key => $value) {
+        $vaverage= $value[0] / $value[1];
+        $time= explode(':', $key);
+        $timestamp= mktime($time[0], $time[1], 0, date("n"), date("j"), date("Y"));
+        $timestamp.= '000';
+        //echo "$timestamp | $vaverage<br />";
+        $jres[]= array($timestamp, $vaverage);
+    }
+    $res= json_encode($jres);
+    return $res;
+}
 ?>

@@ -101,7 +101,7 @@ $(document).ready(function() {
                 controls: [],
                 layers: [
                     new ol.layer.Tile({
-                        source: new ol.source.MapQuest({layer: 'osm'})
+                        source: new ol.source.MapQuest({ layer: 'osm' })
                     }),
                     linksLayer
                 ],
@@ -144,6 +144,8 @@ $(document).ready(function() {
         if(typeof feature != 'undefined') {
             get_traffic_value( feature );
             //console.log('station_id: '+feature.getId());
+        }else{
+            load_features_color();
         }
     });
 
@@ -153,12 +155,7 @@ $(document).ready(function() {
         projection: view.getProjection()
     });
 
-    // Colore tutti i link al primo caricamento della pagina
-    $.each(features, function(index, feature) {
-        //console.log(feature.id);
-        var feature_id= feature.id;
-        get_traffic_value2( feature_id );
-    });
+    load_features_color();
 
 
     /** New controller **/
@@ -305,7 +302,8 @@ function show_feature_selected( feature ) {
         popupContent += "<h3 class='open' onclick='handle_graph("+id+","+linkLength+");'><lang tkey='vedi-grafico'>Vedi grafico</lang> <strong>trend</strong></h3>";
         popupContent += "<div class='graph'>";
         popupContent += "<div class='input'>";
-        popupContent += "<label for='today' class='today' tkey='tempo-medio-oggi'>Tempo medio di oggi</label>";
+        popupContent += "<input type='checkbox' id='today' name='today' checked onchange='get_graph("+id+","+linkLength+");' /><label for='today' class='today' tkey='oggi'> Oggi</label>";
+        popupContent += "<input type='checkbox' id='working' name='working' onchange='get_graph("+id+","+linkLength+");' /><label for='working' class='working' tkey='trend'> Ultimi 30 giorni</label>";
         popupContent += "</div>";
         popupContent += "<div id='trend-graph' style='width: 368px; height: 148px;'></div>";
         popupContent += "</div>";
@@ -318,6 +316,7 @@ function show_feature_selected( feature ) {
 
     // Visualizzo il popup
     $("#popup-pane").html(popupContent).css('display','block');
+    handle_graph(id,linkLength);
 
     // Imposto la traduzione
     setTranslate();
@@ -379,7 +378,7 @@ function get_station_details( feature ) {
 
 function set_default_style() {
     linksSource.forEachFeature(function(f) {
-        f.setStyle(styles['Default'])
+        f.setStyle(styles['Default']);
     });
 
     $('#popup-pane > div').remove();
@@ -534,6 +533,15 @@ function get_machine_value( linkLength ) {
     return res;
 }
 
+// Coloro tutti i link
+function load_features_color() {
+    $.each(features, function(index, feature) {
+        //console.log(feature.id);
+        var feature_id= feature.id;
+        get_traffic_value2( feature_id );
+    });
+}
+
 function get_bicycle_time( linkLength ) {
     var ts = linkLength / bicycle_mv;
     var tm = ts/60;
@@ -549,15 +557,14 @@ function set_loading_animation( status ) {
     }
 }
 
-
 // Close popup
 function closePopup(e) {
     e.preventDefault();
     set_default_style();
+    load_features_color();
     // Disattivato per volere di Paolo
     //set_extent_view();
 }
-
 
 function handle_graph( id, linkLength ) {
     $('.trend h3').toggleClass('open').next().slideToggle('fast');
@@ -571,8 +578,9 @@ function handle_graph( id, linkLength ) {
     }
 }
 
-
 function get_graph( id, linkLength ) {
+    var data_graph= [];
+
     var yA= Math.round( ( linkLength / ( 35/3.6 ) ) / 60 );
     var yB= Math.round( ( linkLength / ( 15/3.6 ) ) / 60 );
 
@@ -582,17 +590,12 @@ function get_graph( id, linkLength ) {
     var y= date.getFullYear();
     var h= date.getHours();
     var minD= new Date(y, m, d, 5, 30, 0).getTime();
-    var maxD= new Date(y, m, d, h+1, 0, 0).getTime();
+    //var maxD= new Date(y, m, d, h+1, 0, 0).getTime();
+    var maxD= new Date(y, m, d, 22, 0, 0).getTime();
 
-    var val = get_graph_data( id, linkLength );
-    //var d1 = [ [6.00, 1], [8.00, 3], [10.00, 2], [14.00, 3], [16.00, 4], [18.00, 7] ];
+    var data_today= get_graph_data_today( id, linkLength );
+    var data_trend= get_graph_data_trend( id, linkLength );
 
-    var data = [{ 
-                color: '#009cdd', 
-                data: val,
-                lines: {show: true}, 
-                points: {show: true, fill: true, fillColor: '#ffffff'}
-    }];
     var options = {
                 grid: {
                     show: true,
@@ -603,24 +606,35 @@ function get_graph( id, linkLength ) {
                         { yaxis: { from: yA, to: yB }, color: '#fdecd2' }, 
                         { yaxis: { from: yB }, color: '#ffddde' } 
                     ]
-                    //hoverable: true
                 },
                 xaxes: [ {min: minD} ],
                 yaxes: [ {min: 0} ],
                 xaxis: { mode:"time", timezone: "browser", minTickSize: [2, "hour"], min: minD, max: maxD },
                 yaxis: { axisLabel: 'min' } // Utilizza la libreria jquery.flot.axislabels.js
-                //zoom: { interactive: true }
-                //pan: { interactive: true },
     };
 
-    $.plot("#trend-graph", data, options);
-    /*$("#trend-graph").bind("plothover", function(event, pos, item) {
-        //var m= item.datapoint[1];
-        if(item) {
-            console.log( item.datapoint[1] );
-            console.log( pos.x );
-        }
-    });*/
+    var trend= {
+        color: 'rgba(233, 50, 142, 0.5)',
+        data: data_trend,
+        lines: { show: true },
+        points: { show: true, fill: true, fillColor: '#ffffff' }
+    }
+    
+    var today= {
+        color: '#009cdd',
+        data: data_today,
+        lines: { show: true },
+        points: { show: true, fill: true, fillColor: '#ffffff' }
+    }
+
+    if( $('#today').is(':checked') ) {
+        data_graph.push(today);
+    }
+    if( $('#working').is(':checked') ) {
+        data_graph.push(trend);
+    }
+
+    $.plot("#trend-graph", data_graph, options);
 }
 
 function get_velocities( id ) {
@@ -638,8 +652,44 @@ function get_velocities( id ) {
     return res;
 }
 
-function get_graph_data(id, linkLength) {
+function get_trend_velocities( id ) {
+    var res;
+    $.ajax({
+        dataType: "json",
+        url: '/php/service_get_trend_velocities.php',
+        type: "GET",
+        data: { id: id },
+        async: false,
+        success: function(data) {
+            res = data;
+        }
+    });
+    return res;
+}
+
+function get_graph_data_today(id, linkLength) {
     var j= get_velocities(id);
+    var res= [];
+
+    // v(m/s)= v(km/h) / 3.6
+    // t(s)= l / v(m/s)
+    // t(m)= t(s) / 60
+
+    for(var i= 0; i< j.length; i++) {
+        //console.log(i+': '+j[i][0]);
+        var t, v, m;
+        t= j[i][0];
+        v= j[i][1] / 3.6;
+        m= Math.round( (linkLength/v)/60 );
+        res[i]= [t, m];
+        //console.log( new Date(t) );
+    }
+
+    return res;
+}
+
+function get_graph_data_trend(id, linkLength) {
+    var j= get_trend_velocities(id);
     var res= [];
 
     // v(m/s)= v(km/h) / 3.6
