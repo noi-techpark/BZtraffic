@@ -91,7 +91,7 @@ $(document).ready(function() {
 
     extentDefault = linksSource.getExtent();
 
-    // Creo la mappa e gli carico il livello con i tracciati 
+    // Creo la mappa e gli carico il livello con i tracciati
     // dei links (linksLayer)
     map = new ol.Map({
                 ol3Logo: false,
@@ -189,7 +189,7 @@ $(document).ready(function() {
 
     // Modifico il cursore se il mouse va sopra una linea
     map.on("pointermove", function(evt) {
-        var hit= this.forEachFeatureAtPixel(evt.pixel, 
+        var hit= this.forEachFeatureAtPixel(evt.pixel,
             function(feature, layer) {
                 return true;
             });
@@ -259,7 +259,7 @@ function show_feature_selected( feature ) {
 
     set_link_color( feature, machineValue.link_value );
 
-    // Creo il popup e lo posiziono in corrispondenza delle coordinate 
+    // Creo il popup e lo posiziono in corrispondenza delle coordinate
     // del click del mouse (clickCoordinate)
     popup = new ol.Overlay({
         element: document.getElementById('popup-pane'),
@@ -316,7 +316,9 @@ function show_feature_selected( feature ) {
 
     // Visualizzo il popup
     $("#popup-pane").html(popupContent).css('display','block');
-    handle_graph(id,linkLength);
+    if(machineValue.ttype != 'deduced') {
+        handle_graph(id,linkLength);
+    }
 
     // Imposto la traduzione
     setTranslate();
@@ -602,9 +604,9 @@ function get_graph( id, linkLength ) {
                     color: '#ffffff',
                     backgroundColor: '#ffffff',
                     markings: [
-                        { yaxis: { from: 0, to: yA }, color: '#eaf3e2' }, 
-                        { yaxis: { from: yA, to: yB }, color: '#fdecd2' }, 
-                        { yaxis: { from: yB }, color: '#ffddde' } 
+                        { yaxis: { from: 0, to: yA }, color: '#eaf3e2' },
+                        { yaxis: { from: yA, to: yB }, color: '#fdecd2' },
+                        { yaxis: { from: yB }, color: '#ffddde' }
                     ]
                 },
                 xaxes: [ {min: minD} ],
@@ -619,7 +621,7 @@ function get_graph( id, linkLength ) {
         lines: { show: true },
         points: { show: true, fill: true, fillColor: '#ffffff' }
     }
-    
+
     var today= {
         color: '#009cdd',
         data: data_today,
@@ -634,7 +636,9 @@ function get_graph( id, linkLength ) {
         data_graph.push(trend);
     }
 
-    $.plot("#trend-graph", data_graph, options);
+    if(data_graph.length > 0) {
+        $.plot("#trend-graph", data_graph, options);
+    }
 }
 
 function get_velocities( id ) {

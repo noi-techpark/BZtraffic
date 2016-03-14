@@ -4,9 +4,9 @@ $bzwrapper= new BZTrafficWrapper();
 $DAYS=31;
 date_default_timezone_set("Europe/Rome");
 
-// get_traffic 
+// get_traffic
 // @param $id ( station id )
-// @return 0: no data, 1: low traffic, 2: se po' vive, 3: statte a casa 
+// @return 0: no data, 1: low traffic, 2: se po' vive, 3: statte a casa
 function get_traffic($id){
    global $bzwrapper;
    $res= 0;
@@ -88,13 +88,13 @@ function get_last_velocity($id) {
     $res= array();
     $json= $bzwrapper->get_records($id, "velocita'");
     $avalue= json_decode($json, true);
-    if(count($avalue) > 1) {
+    if(count($avalue) > 0) {
         $i= count($avalue) -1;
         $res= $avalue[$i]['value'];
     }else{
         $res = 0;
     }
-    
+
     return $res;
 }
 
